@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嘿嘿</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        #background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: -1;
+        }
+
+        #bottom-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        #bottom-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #yes-button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #no-button {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            text-align: center;
+        }
+
+        #popup p {
+            margin-bottom: 20px;
+        }
+
+        #popup button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #popup-yes {
+            background-color: #28a745;
+            color: white;
+            margin-right: 10px;
+        }
+
+        #popup-no {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <img id="background-image" src="C:\Users\yang\Desktop\test\question-popup\6b8616d1d0779766bef641955831c82.png" alt="背景图片">
+    <div id="bottom-buttons">
+        <button id="yes-button" onclick="goToNextPage()">帅</button>
+        <button id="no-button" onclick="openPopup()">不帅</button>
+    </div>
+    <div id="overlay"></div>
+    <div id="popup">
+        <p>再考虑考虑？</p>
+        <button id="popup-yes" onclick="goToNextPage()">帅</button>
+        <button id="popup-no">不帅</button>
+    </div>
+    <script>
+        function goToNextPage() {
+            window.location.href = 'next_page.html';
+        }
+
+        function openPopup() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+
+            const popupNoButton = document.getElementById('popup-no');
+            let moveInterval;
+
+            popupNoButton.addEventListener('mouseenter', function () {
+                moveInterval = setInterval(randomMovePopup, 50);
+            });
+
+            popupNoButton.addEventListener('mouseleave', function () {
+                clearInterval(moveInterval);
+            });
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function randomMovePopup() {
+            const popup = document.getElementById('popup');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const popupWidth = popup.offsetWidth;
+            const popupHeight = popup.offsetHeight;
+
+            const margin = 20;
+            const maxX = windowWidth - popupWidth - margin;
+            const maxY = windowHeight - popupHeight - margin;
+            const minX = margin;
+            const minY = margin;
+
+            const randomX = Math.random() * (maxX - minX) + minX;
+            const randomY = Math.random() * (maxY - minY) + minY;
+
+            popup.style.left = randomX + 'px';
+            popup.style.top = randomY + 'px';
+        }
+
+        document.getElementById('popup-no').addEventListener('click', closePopup);
+    </script>
+</body>
+</html>
+    
